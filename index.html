@@ -23,7 +23,7 @@
       var counter = session;
       $('.start').on('click', function countdown() {
         if (--counter) {
-          setTimeout(countdown, 10);
+          setTimeout(countdown, 1000);
         } else {
           $('.finished').append('&#127813;');
           counter = session;
