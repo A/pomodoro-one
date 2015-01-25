@@ -16,12 +16,12 @@
   <body>
     <div class="container well-lg">
       <div class="panel panel-default">
-        <div class='panel-heading finished'>Pomodoro Timer</div>
+        <div class='panel-heading finished'>Pomodoro Timer </div>
         <div class="panel-body">
           <div class="counter text-center">25:00</div>
           <hr>
           <div class="btn-group pull-right">
-            <button class="stop btn btn-default">Stop</button>
+            <button class="stop btn btn-default">Break</button>
             <button class="start btn btn-default btn-primary">Start new one</button>
           </div>
         </div>
@@ -29,21 +29,24 @@
     </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script>
-
+    var iconPomodoro = '&#127813;';
+    var iconBreak = '&#128128;';
     $(function() {
       var session = 25 * 60;
       var counter = session;
       var timer = 0;
       $('.stop').on('click', function() {
+        if (counter === session) { return; }
         clearTimeout(timer);
         counter = session;
+        $('.finished').append(iconBreak);
         updateView(counter);
       });
       $('.start').on('click', function countdown() {
         if (--counter) {
           timer = setTimeout(countdown, 1000);
         } else {
-          $('.finished').append('&#127813;');
+        $('.finished').append(iconPomodoro);
           counter = session;
           alert('Done');
         }
@@ -59,7 +62,6 @@
       $('.counter').text(time);
       document.title = '🍅 ' + time;
     }
-
   </script>
   </body>
 </html>
