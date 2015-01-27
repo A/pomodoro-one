@@ -35,10 +35,12 @@
     // и моделированию
     var iconPomodoro = '&#127813;';
     var iconBreak = '&#128128;';
+    var session = 25 * 60 * 1000;
+    var counter = session;
+    var timer = 0;
+
     $(function() {
-      var session = 25 * 60;
-      var counter = session;
-      var timer = 0;
+
       $('.stop').on('click', function() {
         if (counter === session) { return; }
         clearTimeout(timer);
@@ -46,20 +48,33 @@
         $('.finished').append(iconBreak);
         updateView(counter);
       });
-      $('.start').on('click', function countdown() {
-        if (--counter) {
-          timer = setTimeout(countdown, 1000);
-        } else {
-        $('.finished').append(iconPomodoro);
-          counter = session;
-          alert('Done');
-        }
-        updateView(counter);
+
+      $('.start').on('click', function () {
+
+        var stop = +new Date() + session;
+        console.log(stop);
+
+        countdown();
+
+        function countdown () {
+          counter = stop - new Date();
+          console.log(counter);
+
+          if (counter > 0) {
+            timer = setTimeout(countdown, 50);
+          } else {
+            $('.finished').append(iconPomodoro);
+            counter = session;
+            alert('Done');
+          }
+          updateView(counter / 1000);
+        };
       });
     });
+
     function updateView (counter) {
       var minutes = parseInt(counter/60);
-      var seconds = counter - (minutes * 60);
+      var seconds = parseInt(counter - (minutes * 60));
       if (minutes < 10) { minutes = "0" + minutes.toString(); }
       if (seconds < 10) { seconds = "0" + seconds.toString(); }
       var time = minutes + ":" + seconds;
