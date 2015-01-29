@@ -67,12 +67,13 @@
             counter = session;
             alert('Done');
           }
-          updateView(counter / 1000);
+          updateView(counter);
         };
       });
     });
 
     function updateView (counter) {
+      counter = counter / 1000;
       var minutes = parseInt(counter/60);
       var seconds = parseInt(counter - (minutes * 60));
       if (minutes < 10) { minutes = "0" + minutes.toString(); }
